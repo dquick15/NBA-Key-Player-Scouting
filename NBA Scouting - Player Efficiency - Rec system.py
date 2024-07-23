@@ -3,11 +3,6 @@
 
 # ## Load CSV File
 
-# In[41]:
-
-
-#Check out efficiency by player, then team individually. 
-#Work on a combining dataset to find efficient players by selecting a team later
 ##dataframe.iloc[:, :17].head()
 import pandas as pd
 
@@ -21,8 +16,6 @@ advanced_df = pd.read_csv(file_path)
 
 
 # ## Preprocess Data
-
-# In[42]:
 
 
 # Filter for the 2024 season
@@ -44,8 +37,6 @@ advanced_df[['per', 'usg_percent']] = scaler.fit_transform(advanced_df[['per', '
 
 # ## Prep Dataset
 
-# In[43]:
-
 
 from sklearn.model_selection import train_test_split
 
@@ -61,8 +52,6 @@ X_train, X_test = train_test_split(features, test_size=0.2, random_state=42)
 
 
 # ## Build and Train Model 
-
-# In[44]:
 
 
 from sklearn.cluster import KMeans
@@ -85,8 +74,6 @@ advanced_df['Cluster'] = kmeans.predict(features)
 
 
 # ## Identify Efficency of Players
-
-# In[45]:
 
 
 # Sort players within each cluster based on PER and USG%
