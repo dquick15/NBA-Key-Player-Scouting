@@ -2,13 +2,6 @@
 # coding: utf-8
 
 # ## Load CSV File
-
-# In[248]:
-
-
-#Check out efficiency by player, then team individually. 
-#Work on a combining dataset to find efficient players by selecting a team later
-##dataframe.iloc[:, :17].head()
 import pandas as pd
 import numpy as np
 
@@ -20,10 +13,7 @@ advanced_df = pd.read_csv(file_path)
 # print("Advanced Stats Data:")
 advanced_df.iloc[:, 10:].head()
 
-
 # ## Preprocess Data
-
-# In[249]:
 
 
 # Filter for the 2024 season
@@ -32,7 +22,7 @@ advanced_df = advanced_df[advanced_df['season'] == 2024]
 # Handling missing values
 advanced_df = advanced_df.dropna(subset=['player', 'tm', 'mp', 'per'])
 
-# Normalize numerical values (PER and USG%)
+# Normalize numerical values
 from sklearn.preprocessing import MinMaxScaler
 
 scaler = MinMaxScaler()
@@ -45,12 +35,9 @@ advanced_df[['mp', 'per']] = scaler.fit_transform(advanced_df[['mp', 'per']])
 
 # ## Prep Dataset
 
-# In[250]:
-
-
 from sklearn.model_selection import train_test_split
 
-# Define features (PER and USG%)
+# Define features
 features = advanced_df[['mp', 'per']]
 
 # Split the data into training and test sets
@@ -62,8 +49,6 @@ X_train, X_test = train_test_split(features, test_size=0.2, random_state=42)
 
 
 # ## Build and Train Model 
-
-# In[251]:
 
 
 from sklearn.cluster import KMeans
@@ -87,10 +72,8 @@ print(advanced_df.head())
 
 # ## Identify Efficency of Players
 
-# In[252]:
 
-
-# Sort players within each cluster based on PER and USG%
+# Sort players within each cluster based on 
 top_players = advanced_df.sort_values(by=['Cluster', 'mp', 'per'], ascending=[True, False, False])
 
 def get_best_players_for_team(team_name, data, top_n = 3):
@@ -101,7 +84,7 @@ def get_best_players_for_team(team_name, data, top_n = 3):
     if team_data.empty:
         return f"No data available for team {team_name}"
  
-    # Sort the team data by PER and USG%
+    # Sort the team data by 
     sorted_team_data = team_data.sort_values(by=['mp', 'per'], ascending=[False, False])
    
     # Select the top N players
@@ -116,9 +99,6 @@ print(f"\nBest players for {team_name}:\n{best_players.iloc[:, :4]}")
 
 
 # ## Evaluate Model 
-
-# In[253]:
-
 
 from sklearn.metrics import silhouette_score
 
